@@ -64,10 +64,12 @@ namespace EvaFuel
 				ScreenMessages.PostScreenMessage("Filled EVA tank with " + Math.Round(takenFuel, 2).ToString() + " units of " + shipProp + ".", messageLife, ScreenMessageStyle.UPPER_CENTER);
 			} else if (rescueShip == true & fuelRequest == 0) {
 					data.to.RequestResource (evaProp, evaFuelMax - 1);//give one unit of eva propellant
-					PopupDialog.SpawnPopupDialog (new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), "Rescue fuel!", "Warning! There was no fuel aboard ship, so only one single unit of " + evaProp + " was able to be scrounged up for the journey!", "OK", false, HighLogic.UISkin);
+					if (!data.from.vessel.Landed)
+						PopupDialog.SpawnPopupDialog (new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), "Rescue fuel!", "Warning! There was no fuel aboard ship, so only one single unit of " + evaProp + " was able to be scrounged up for the journey!", "OK", false, HighLogic.UISkin);
 			} else {
 				data.to.RequestResource (evaProp, evaFuelMax - fuelRequest);
-				PopupDialog.SpawnPopupDialog (new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), "Low EVA Fuel!", "Warning! Only " + Math.Round(takenFuel, 2).ToString() + " units of " + shipProp + " were available for EVA! Meaning you only have " + Math.Round(fuelRequest, 2).ToString() + " units of " + evaProp + "!", "OK", false, HighLogic.UISkin);
+				if (!data.from.vessel.Landed)
+					PopupDialog.SpawnPopupDialog (new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), "Low EVA Fuel!", "Warning! Only " + Math.Round(takenFuel, 2).ToString() + " units of " + shipProp + " were available for EVA! Meaning you only have " + Math.Round(fuelRequest, 2).ToString() + " units of " + evaProp + "!", "OK", false, HighLogic.UISkin);
 			}
 		}
 
